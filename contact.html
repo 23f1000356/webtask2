@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us</title>
+    <style>
+        /* Same styles as provided */
+        /* General reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #121212;
+            color: white;
+        }
+
+        /* Navbar styles */
+        .navbar {
+            background-color: #333;
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .navbar .logo img {
+            height: 50px;
+            width: auto;
+        }
+
+        .navbar .search-container {
+            flex: 2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .navbar .search-box {
+            width: 300px;
+            padding: 0.5rem;
+            font-size: 1rem;
+            border: 2px solid #555;
+            border-radius: 5px;
+            background-color: #222;
+            color: white;
+        }
+
+        .navbar .search-button {
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            margin-left: 0.5rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .navbar .search-button:hover {
+            background-color: #444;
+        }
+
+        .navbar .nav-links {
+            flex: 1;
+            display: flex;
+            justify-content: flex-end;
+            list-style: none;
+            gap: 1.5rem;
+        }
+
+        .navbar .nav-links li a {
+            color: white;
+            text-decoration: none;
+            font-size: 1rem;
+        }
+
+        .navbar .nav-links li a:hover {
+            color: #00bcd4;
+        }
+
+        /* Contact section styles */
+        .contact-container {
+            width: 100%;
+            min-height: 100vh;
+            padding: 50px 20px;
+            text-align: center;
+            background-image: url('images/bg3.jpg'); /* Background image path */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            color: white;
+        }
+
+        .contact-container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6); /* Dark overlay for better text readability */
+            z-index: -1;
+        }
+
+        .contact-title {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #333;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid #555;
+            border-radius: 5px;
+            font-size: 16px;
+            background-color: #222;
+            color: white;
+        }
+
+        .contact-form textarea {
+            height: 150px;
+            resize: none;
+        }
+
+        .contact-form button {
+            padding: 12px 25px;
+            font-size: 18px;
+            color: white;
+            background-color: #333;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .contact-form button:hover {
+            background-color: #444;
+        }
+
+        footer {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 14px;
+            color: white;
+        }
+    </style>
+    <script>
+        function validateForm(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            // Get form elements
+            const name = document.forms["contactForm"]["name"].value.trim();
+            const email = document.forms["contactForm"]["email"].value.trim();
+            const message = document.forms["contactForm"]["message"].value.trim();
+
+            // Regular expression for validating email
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            // Validation checks
+            if (!name) {
+                alert("Name is required.");
+                return false;
+            }
+
+            if (!email) {
+                alert("Email is required.");
+                return false;
+            } else if (!emailRegex.test(email)) {
+                alert("Invalid email format.");
+                return false;
+            }
+
+            if (!message) {
+                alert("Message is required.");
+                return false;
+            }
+
+            // If all validations pass, submit the form
+            alert("Form submitted successfully!");
+            event.target.submit();
+        }
+    </script>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="index.html" class="logo">
+            <img src="images/logo1.jpg" alt="HeadlineGenerator Logo">
+        </a>
+       
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="image.html">Gallery</a></li>
+            <li><a href="index.html">Logout</a></li>
+        </ul>
+    </nav>
+
+    <!-- Contact Section -->
+    <div class="contact-container">
+        <h1 class="contact-title">Contact Us</h1>
+        <form name="contactForm" class="contact-form" onsubmit="validateForm(event)">
+            <input type="text" name="name" placeholder="Your Name" required>
+            <input type="email" name="email" placeholder="Your Email" required>
+            <textarea name="message" placeholder="Your Message" required></textarea>
+            <button type="submit">Send Message</button>
+        </form>
+        <footer>
+            <p>&copy; 2025 Headline | All Rights Reserved</p>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Gallery</title>
+    <style>
+        /* General reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            color: white;
+            margin: 0;
+            padding: 0;
+            background-color: #121212;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Navbar styles */
+        .navbar {
+            background-color: #333;
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            width: 100%;
+        }
+
+        .navbar .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+            flex: 1;
+        }
+
+        .navbar .nav-links {
+            display: flex;
+            justify-content: flex-end;
+            list-style: none;
+            gap: 1.5rem;
+        }
+
+        .navbar .nav-links li a {
+            color: white;
+            text-decoration: none;
+            font-size: 1rem;
+        }
+
+        .navbar .nav-links li a:hover {
+            color: #00bcd4;
+        }
+
+        /* Main content styles */
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            width: 100%;
+            height: calc(100vh - 70px);
+            padding: 20px;
+            box-sizing: border-box;
+            text-align: center;
+            overflow-y: auto;
+        }
+
+        .background-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        .line {
+            width: 100%;
+            height: 4px;
+            background-color: white;
+            margin: 20px 0;
+        }
+
+        h1 {
+            color: white;
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        /* Gallery Styles */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
+
+        .gallery-item {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            overflow: hidden;
+            border-radius: 8px;
+            border: 2px solid #444;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .gallery-item img:hover {
+            transform: scale(1.05);
+        }
+
+        .delete-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 5px;
+            font-size: 18px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .delete-btn:hover {
+            background-color: rgba(255, 0, 0, 0.7);
+        }
+
+        .title-input {
+            margin-top: 10px;
+            width: 90%;
+            padding: 8px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #444;
+            background-color: #333;
+            color: white;
+            text-align: center;
+        }
+
+        .add-image-btn {
+            padding: 12px 25px;
+            font-size: 18px;
+            color: white;
+            background-color: #333;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .add-image-btn:hover {
+            background-color: #444;
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+        }
+
+        .modal-content {
+            background-color: #222;
+            padding: 20px;
+            border-radius: 8px;
+            width: 50%;
+            text-align: center;
+        }
+
+        .modal-content input,
+        .modal-content textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #444;
+            background-color: #333;
+            color: white;
+        }
+
+        .modal-content button {
+            padding: 12px 25px;
+            font-size: 18px;
+            color: white;
+            background-color: #333;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .modal-content button:hover {
+            background-color: #444;
+        }
+
+        .modal-close-btn {
+            background-color: rgba(0, 0, 0, 0.5);
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            color: white;
+            border: none;
+            padding: 5px;
+            font-size: 18px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .image-info {
+            margin-top: 10px;
+            color: white;
+            font-size: 14px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="index.html" class="logo">
+            <img src="images/logo1.jpg" alt="HeadlineGenerator Logo" style="height: 40px; width: auto;">
+        </a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="logout.html">Logout</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main content -->
+    <div class="main-container">
+        <img src="images/bg3.jpg" alt="Background Image" class="background-img">
+        <div class="line"></div>
+        <h1>Image Gallery</h1>
+
+        <!-- Gallery Section -->
+        <div class="gallery" id="gallery">
+            <!-- Dynamic Images will be added here -->
+        </div>
+
+        <!-- Button to Add Images -->
+        <input type="file" id="imageInput" accept="image/*" multiple style="display: none;" onchange="addImages()">
+        <button class="add-image-btn" onclick="document.getElementById('imageInput').click()">Add Image(s)</button>
+
+        <!-- Modal for More Information -->
+        <div class="modal" id="imageModal">
+            <div class="modal-content">
+                <button class="modal-close-btn" onclick="closeModal()">×</button>
+                <h2>Add More Information</h2>
+                <input type="text" id="imageTitle" placeholder="Enter Title">
+                <textarea id="imageDescription" placeholder="Enter Description"></textarea>
+                <button onclick="saveImageInfo()">Save</button>
+            </div>
+        </div>
+
+        <footer>
+            <p>&copy; 2025 Headline | All Rights Reserved</p>
+        </footer>
+        <div class="line"></div>
+    </div>
+
+    <script>
+        let selectedImage = null;
+        let selectedImageContainer = null;
+
+        // Function to add images dynamically
+        function addImages() {
+            const fileInput = document.getElementById('imageInput');
+            const gallery = document.getElementById('gallery');
+
+            const files = fileInput.files;
+            if (files.length > 0) {
+                for (let i = 0; i < files.length; i++) {
+                    const file = files[i];
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        const imgContainer = document.createElement('div');
+                        imgContainer.classList.add('gallery-item');
+
+                        const img = document.createElement('img');
+                        img.src = event.target.result;
+                        img.alt = "Gallery Image";
+
+                        // Add click event to open modal
+                        img.onclick = function() {
+                            openModal(img, imgContainer);
+                        };
+
+                        // Add a title input below the image
+                        const titleInput = document.createElement('input');
+                        titleInput.classList.add('title-input');
+                        titleInput.placeholder = "Enter title for this image";
+                        titleInput.addEventListener('change', function() {
+                            const title = titleInput.value;
+                            if (title) {
+                                const infoDiv = document.createElement('div');
+                                infoDiv.classList.add('image-info');
+                                infoDiv.textContent = `Title: ${title}`;
+                                imgContainer.appendChild(infoDiv);
+                            }
+                        });
+
+                        // Add delete button
+                        const deleteBtn = document.createElement('button');
+                        deleteBtn.classList.add('delete-btn');
+                        deleteBtn.textContent = '×';
+                        deleteBtn.onclick = function() {
+                            if (confirm("Are you sure you want to delete this image?")) {
+                                gallery.removeChild(imgContainer);
+                            }
+                        };
+
+                        imgContainer.appendChild(img);
+                        imgContainer.appendChild(titleInput);
+                        imgContainer.appendChild(deleteBtn);
+                        gallery.appendChild(imgContainer);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            }
+        }
+
+        // Open Modal to add information
+        function openModal(image, container) {
+            selectedImage = image;
+            selectedImageContainer = container;
+            document.getElementById('imageModal').style.display = 'flex';
+        }
+
+        // Close Modal
+        function closeModal() {
+            document.getElementById('imageModal').style.display = 'none';
+        }
+
+        // Save Information and Display Below Image
+        function saveImageInfo() {
+            const title = document.getElementById('imageTitle').value;
+            const description = document.getElementById('imageDescription').value;
+
+            if (title && description) {
+                const infoDiv = document.createElement('div');
+                infoDiv.classList.add('image-info');
+                infoDiv.innerHTML = `<strong>${title}</strong><p>${description}</p>`;
+
+                selectedImageContainer.appendChild(infoDiv);
+                closeModal(); // Close the modal after saving
+            }
+        }
+    </script>
+</body>
+</html>

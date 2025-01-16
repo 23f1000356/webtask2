@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Article Headline Generator</title>
+    <style>
+        /* General reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            color: white;
+            margin: 0;
+            padding: 0;
+            background-color: #121212;
+        }
+
+        /* Navbar styles */
+        .navbar {
+            background-color: #333;
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .navbar .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+            flex: 1;
+        }
+
+        .navbar .search-container {
+            flex: 2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .navbar .search-box {
+            width: 300px;
+            padding: 0.5rem;
+            font-size: 1rem;
+            border: 2px solid #555;
+            border-radius: 5px;
+            background-color: #222;
+            color: white;
+        }
+
+        .navbar .search-button {
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            background-color: #333; /* Same as the "Generate Headline" button */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            margin-left: 0.5rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .navbar .search-button:hover {
+            background-color: #444; /* Matches the hover effect for "Generate Headline" button */
+        }
+
+        .navbar .nav-links {
+            flex: 1;
+            display: flex;
+            justify-content: flex-end;
+            list-style: none;
+            gap: 1.5rem;
+        }
+
+        .navbar .nav-links li a {
+            color: white;
+            text-decoration: none;
+            font-size: 1rem;
+        }
+
+        .navbar .nav-links li a:hover {
+            color: #00bcd4;
+        }
+
+        /* Main content styles */
+        .main-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            padding: 20px;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        .background-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        .line {
+            width: 100%;
+            height: 4px;
+            background-color: white;
+            margin: 20px 0;
+        }
+
+        .news-quote {
+            font-size: 18px;
+            font-weight: bold;
+            color: white;
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            margin: 0 auto;
+            border-radius: 5px;
+        }
+
+        h1 {
+            color: white;
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        textarea.article-box {
+            width: 80%;
+            max-width: 800px;
+            height: 250px;
+            padding: 15px;
+            font-size: 16px;
+            line-height: 1.5;
+            border: 2px solid white;
+            border-radius: 8px;
+            resize: none;
+            margin-bottom: 20px;
+            background-color: #333;
+            color: white;
+        }
+
+        .generate-button {
+            padding: 12px 25px;
+            font-size: 18px;
+            color: white;
+            background-color: #333;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .generate-button:hover {
+            background-color: #444;
+        }
+
+        footer {
+            margin-top: 40px;
+            font-size: 14px;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="#" class="logo">
+            <img src="images/logo1.jpg" alt="HeadlineGenerator Logo" style="height: 40px; width: auto;">
+        </a>
+       
+        <div class="search-container">
+            <input type="text" class="search-box" placeholder="Search articles...">
+            <button class="search-button">Search</button>
+        </div>
+        <ul class="nav-links">
+            <li><a href="login.html">Login</a></li>
+            <li><a href="register.html">Register</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="image.html">Gallery</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main content -->
+    <div class="main-container">
+        <img src="images/Background1.png" alt="Background Image" class="background-img">
+
+        <div class="line"></div>
+        <div class="news-quote">
+            "The art of news is not in the event, but in the storytelling." 
+        </div>
+        <h1>Welcome to the Article Headline Generator</h1>
+        <textarea class="article-box" placeholder="Enter your article here..."></textarea><br>
+        <button class="generate-button" id="generateButton">Generate Headline</button>
+        <footer>
+            <p>&copy; 2025 Headline | All Rights Reserved</p>
+        </footer>
+        <div class="line"></div>
+    </div>
+
+    <script>
+        document.getElementById("generateButton").addEventListener("click", function() {
+            const articleText = document.querySelector(".article-box").value;
+            if (articleText.trim() === "") {
+                alert("Please enter an article before generating a headline.");
+            } else {
+                alert("Headline Generated!");
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Article Headline Generator</title>
+    <style>
+        /* Your existing styles remain unchanged */
+        /* General reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            color: white;
+            margin: 0;
+            padding: 0;
+            background-color: #121212;
+        }
+
+        /* Navbar styles */
+        .navbar {
+            background-color: #333;
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .navbar .logo img {
+            height: 40px;
+            width: auto;
+        }
+
+        /* Register form styles */
+        .register-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+            background-image: url('images/bg3.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+        }
+
+        .register-container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: -1;
+        }
+
+        .register-form {
+            background-color: #333;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .register-form h1 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .register-form input {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid #555;
+            border-radius: 5px;
+            font-size: 16px;
+            background-color: #222;
+            color: white;
+        }
+
+        .register-form button {
+            padding: 12px 25px;
+            font-size: 18px;
+            color: white;
+            background-color: #333;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .register-form button:hover {
+            background-color: #444;
+        }
+
+        .register-form p {
+            font-size: 14px;
+            margin-top: 15px;
+            color: #aaa;
+        }
+
+        .register-form p a {
+            color: #00bcd4;
+            text-decoration: none;
+        }
+
+        .register-form p a:hover {
+            text-decoration: underline;
+        }
+    </style>
+    <script>
+        function validateRegisterForm(event) {
+            event.preventDefault(); // Prevent form submission
+
+            // Get form values
+            const username = document.forms["registerForm"]["username"].value.trim();
+            const email = document.forms["registerForm"]["email"].value.trim();
+            const password = document.forms["registerForm"]["password"].value.trim();
+            const confirmPassword = document.forms["registerForm"]["confirm_password"].value.trim();
+
+            // Regular expression for email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            // Validate username
+            if (!username) {
+                alert("Username is required.");
+                return false;
+            }
+
+            // Validate email
+            if (!email) {
+                alert("Email is required.");
+                return false;
+            } else if (!emailRegex.test(email)) {
+                alert("Invalid email format.");
+                return false;
+            }
+
+            // Validate password
+            if (!password) {
+                alert("Password is required.");
+                return false;
+            } else if (password.length < 6) {
+                alert("Password must be at least 6 characters long.");
+                return false;
+            }
+
+            // Validate confirm password
+            if (password !== confirmPassword) {
+                alert("Passwords do not match.");
+                return false;
+            }
+
+            // If all validations pass
+            alert("Registration successful!");
+            event.target.submit();
+        }
+    </script>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="index.html" class="logo">
+            <img src="images/logo1.jpg" alt="HeadlineGenerator Logo">
+        </a>
+        <span class="title">Headline Generator</span>
+    </nav>
+
+    <!-- Register Section -->
+    <div class="register-container">
+        <form name="registerForm" action="register.php" method="POST" class="register-form" onsubmit="validateRegisterForm(event)">
+            <h1>Register</h1>
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <input type="password" name="confirm_password" placeholder="Confirm Password" required>
+            <button type="submit">Register</button>
+            <p>Already have an account? <a href="login.html">Login here</a></p>
+        </form>
+    </div>
+</body>
+</html>

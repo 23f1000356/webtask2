@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        /* Your existing styles remain unchanged */
+        /* General reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #121212;
+            color: white;
+        }
+
+        /* Navbar styles */
+        .navbar {
+            background-color: #333;
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .navbar .logo img {
+            height: 50px;
+            width: auto;
+        }
+
+        .navbar .title {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-left: 15px;
+        }
+
+        /* Login form styles */
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+            background-image: url('images/bg1.jpg'); /* Background image path */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+        }
+
+        .login-container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6); /* Dark overlay for better text readability */
+            z-index: -1;
+        }
+
+        .login-form {
+            background-color: #333;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .login-form h1 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .login-form input {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid #555;
+            border-radius: 5px;
+            font-size: 16px;
+            background-color: #222;
+            color: white;
+        }
+
+        .login-form button {
+            padding: 12px 25px;
+            font-size: 18px;
+            color: white;
+            background-color: #333;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .login-form button:hover {
+            background-color: #444;
+        }
+
+        .login-form p {
+            font-size: 14px;
+            margin-top: 15px;
+            color: #aaa;
+        }
+
+        .login-form p a {
+            color: #00bcd4;
+            text-decoration: none;
+        }
+
+        .login-form p a:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 14px;
+            color: white;
+        }
+    </style>
+    <script>
+        function validateLoginForm(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            // Get form values
+            const username = document.forms["loginForm"]["username"].value.trim();
+            const email = document.forms["loginForm"]["email"].value.trim();
+            const password = document.forms["loginForm"]["password"].value.trim();
+
+            // Regular expression for validating email
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            // Validation checks
+            if (!username) {
+                alert("Username is required.");
+                return false;
+            }
+
+            if (!email) {
+                alert("Email is required.");
+                return false;
+            } else if (!emailRegex.test(email)) {
+                alert("Invalid email format.");
+                return false;
+            }
+
+            if (!password) {
+                alert("Password is required.");
+                return false;
+            } else if (password.length < 6) {
+                alert("Password must be at least 6 characters long.");
+                return false;
+            }
+
+            // If all validations pass
+            alert("Login successful!");
+            event.target.submit();
+        }
+    </script>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="index.html" class="logo">
+            <img src="images/logo1.jpg" alt="Headline Generator Logo">
+        </a>
+        <span class="title">Headline Generator</span>
+    </nav>
+    
+    <!-- Login Section -->
+    <div class="login-container">
+        <form name="loginForm" class="login-form" action="login.php" method="post" onsubmit="validateLoginForm(event)">
+            <h1>Login</h1>
+            
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <button type="submit">Login</button>
+            <p>Forgot your password? <a href="forgot_password.html">Click here</a></p>
+            <p>Don't have an account? <a href="register.html">Register here</a></p>
+        </form>
+    </div>
+</body>
+</html>
